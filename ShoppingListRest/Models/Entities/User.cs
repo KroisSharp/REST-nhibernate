@@ -5,12 +5,10 @@ using System.Web;
 
 namespace ShoppingListRest.Models.Entities
 {
-    public class Item
+    public class User
     {
         public virtual int Id { get; set; }
         public virtual string UID { get; set; }
-        public virtual string Name { get; set; }
-        public virtual double Price { get; set; }
-        public virtual int Category { get; set; }
+        public virtual string Email { get; set; }
     }
 }

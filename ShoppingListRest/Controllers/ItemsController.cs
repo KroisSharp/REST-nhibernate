@@ -1,4 +1,7 @@
-﻿using ShoppingListRest.Models.Entities;
+﻿using ShoppingListRest.Controllers.Respository;
+using ShoppingListRest.Models.DatabaseConnection.Hibernate;
+using ShoppingListRest.Models.Entities;
+using ShoppingListRest.Models.Respository.Hibernate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +15,12 @@ namespace ShoppingListRest.Controllers
     public class ItemsController : ApiController
     {
 
-
-        //senere DB nu staic list
-        private static List<Item> Items = new List<Item>
+        private readonly IItemRespository _itemRespository;
+        public ItemsController()
         {
-            new Item{Id = 1, Name = "ost", Price = 20.95, UID = "FireBaseUID", Category = new Category{Id = 1, Department = "Mejeri"}},
-            new Item{Id = 2, Name = "smør", Price = 20.95, UID = "FireBaseUID", Category = new Category{Id = 1, Department = "Mejeri"}},
-            new Item{Id = 3, Name = "mælk", Price = 20.95, UID = "FireBaseUID", Category = new Category{Id = 1, Department = "Mejeri"}},
-            new Item{Id = 4, Name = "æg", Price = 20.95, UID = "FireBaseUID", Category = new Category{Id = 1, Department = "Mejeri"}},
-            new Item{Id = 5, Name = "yoghurt", Price = 20.95, UID = "FireBaseUID", Category = new Category{Id = 1, Department = "Mejeri"}},
-            new Item{Id = 6, Name = "feta", Price = 20.95, UID = "FireBaseUID", Category = new Category{Id = 1, Department = "Mejeri"}},
-
-        };
-
+            var connection = new ShoppingListDBConenection();
+            _itemRespository = new ItemRespository(connection);
+        }
 
 
         [HttpGet]
@@ -33,10 +29,10 @@ namespace ShoppingListRest.Controllers
         public IHttpActionResult GetItems(string uid)
         {
 
-            var items = "hej";
+            var items = _itemRespository.GetItemsByUID(uid);
 
             //TODO: listen skal hentes og skal hentes genenm interface etc
-            return Ok(Items);
+            return Ok(items);
         }
 
     }
