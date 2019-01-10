@@ -18,11 +18,9 @@ namespace ShoppingListRest.Models.Mappings.Hibernate
                 .Column("Name");
             Map(x => x.Price)
                 .Column("Price");
-
-
-            References<Category>(x => x.Category)
+            Map(x => x.Category)
                 .Column("Category");
-            References<User>(x => x.UID)
+            Map(x => x.UID)
                 .Column("UID");
         }
     }

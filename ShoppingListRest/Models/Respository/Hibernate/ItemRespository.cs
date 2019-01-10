@@ -1,4 +1,5 @@
-﻿using ShoppingListRest.Controllers.Respository;
+﻿using NHibernate.Criterion;
+using ShoppingListRest.Controllers.Respository;
 using ShoppingListRest.Models.DatabaseConnection.Hibernate;
 using ShoppingListRest.Models.Entities;
 using System;
@@ -19,11 +20,9 @@ namespace ShoppingListRest.Models.Respository.Hibernate
 
         public IList<Item> GetItemsByUID(string uid)
         {
-            User _user = null;
-
             var session = _hibernateConection.OpenSession();
             return session.QueryOver<Item>()
-                .Where(x => x.Name == "mælk")
+                .Where(x => x.UID == uid)
                 .List();
         }
     }

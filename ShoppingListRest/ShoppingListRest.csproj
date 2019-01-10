@@ -187,12 +187,8 @@
     </Compile>
     <Compile Include="Models\DatabaseConnection\Hibernate\IHibernateConnection.cs" />
     <Compile Include="Models\DatabaseConnection\Hibernate\ShoppingListDBConenection.cs" />
-    <Compile Include="Models\Entities\Category.cs" />
     <Compile Include="Models\Entities\Item.cs" />
-    <Compile Include="Models\Entities\User.cs" />
-    <Compile Include="Models\Mappings\Hibernate\CategoryMap.cs" />
     <Compile Include="Models\Mappings\Hibernate\ItemMap.cs" />
-    <Compile Include="Models\Mappings\Hibernate\UserMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

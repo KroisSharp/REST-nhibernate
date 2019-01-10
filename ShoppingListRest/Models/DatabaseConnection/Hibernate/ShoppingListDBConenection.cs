@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
@@ -44,10 +45,8 @@ namespace ShoppingListRest.Models.DatabaseConnection.Hibernate
                 //.ShowSql()
                 )
                 .CurrentSessionContext("web")
-                //.ExposeConfiguration(x => x.SetInterceptor(new SqlStatementInterceptor()))
-                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<User>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Item>())
                 .BuildSessionFactory();
         }
     }
 }
-//https://github.com/FluentNHibernate/fluent-nhibernate/wiki/database-configuration
