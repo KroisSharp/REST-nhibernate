@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
-
+using System.Web.Http.Cors;
 namespace ShoppingListRest
 {
     public static class WebApiConfig
@@ -22,6 +22,14 @@ namespace ShoppingListRest
             );
             config.Formatters.JsonFormatter.SupportedMediaTypes
                 .Add(new MediaTypeHeaderValue("text/html"));
+
+
+
+            //enable cors
+            //TODO: skift 1.* -> til firebase on release
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
+
         }
     }
 }
