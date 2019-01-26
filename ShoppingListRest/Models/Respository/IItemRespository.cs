@@ -10,5 +10,7 @@ namespace ShoppingListRest.Controllers.Respository
     {
         IList<Item> GetItemsByUID(string uid);
 
+        Boolean UserOk(string uid);
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using ShoppingListRest.Controllers.Respository;
+﻿using Newtonsoft.Json.Linq;
+using ShoppingListRest.Controllers.Respository;
 using ShoppingListRest.Models.DatabaseConnection.Hibernate;
 using ShoppingListRest.Models.Entities;
 using ShoppingListRest.Models.Respository.Hibernate;
@@ -28,11 +29,34 @@ namespace ShoppingListRest.Controllers
         [ResponseType(typeof(string))]
         public IHttpActionResult GetItems(string uid)
         {
+            
+            //Is user logged in
+            if (!_itemRespository.UserOk(uid))
+            {
+                dynamic jsonObejct = new JObject();
+                var HttpStatus = HttpStatusCode.Unauthorized;
+                jsonObejct.status = (int)HttpStatus;
+                jsonObejct.message =
+                    "The request has not been applied because it lacks valid authentication credentials for the target resource.";
+            }
 
+            //get list by uid
             var items = _itemRespository.GetItemsByUID(uid);
+            //check if there is items to return
+            if (items.Count < 0)
+            {
+                dynamic jsonObject = new JObject();
+                var HttpStatus = HttpStatusCode.NoContent;
+                jsonObject.status = (int)HttpStatus;
+                jsonObject.message =
+                    "The server has successfully fulfilled the request and that there is no additional content to send in the response payload body.";
+                return Content(HttpStatus, jsonObject);
+            }
 
-            //TODO: listen skal hentes og skal hentes genenm interface etc
+
+            //return items
             return Ok(items);
+
         }
 
     }

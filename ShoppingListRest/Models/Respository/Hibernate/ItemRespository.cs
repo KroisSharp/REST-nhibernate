@@ -25,5 +25,17 @@ namespace ShoppingListRest.Models.Respository.Hibernate
                 .Where(x => x.UID == uid)
                 .List();
         }
+
+        public bool UserOk(string uid)
+        {
+            var session = _hibernateConection.OpenSession();
+            var _user = session.Query<Item>()
+                .Where(x => x.UID == uid)
+                .FirstOrDefault();
+
+            if (_user == null) return false;
+
+            return true;
+        }
     }
 }
