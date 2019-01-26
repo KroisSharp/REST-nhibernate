@@ -24,13 +24,14 @@ namespace ShoppingListRest.Controllers
         }
 
 
+        #region Get Items
         [HttpGet]
         [Route("api/items/{uid}")]
         [ResponseType(typeof(string))]
         public IHttpActionResult GetItems(string uid)
         {
-            
-            //Is user logged in
+
+            //does user exist
             if (!_itemRespository.UserOk(uid))
             {
                 dynamic jsonObejct = new JObject();
@@ -38,6 +39,7 @@ namespace ShoppingListRest.Controllers
                 jsonObejct.status = (int)HttpStatus;
                 jsonObejct.message =
                     "The request has not been applied because it lacks valid authentication credentials for the target resource.";
+                return Content(HttpStatus, jsonObejct);
             }
 
             //get list by uid
@@ -56,6 +58,36 @@ namespace ShoppingListRest.Controllers
 
             //return items
             return Ok(items);
+
+        }
+        #endregion
+
+
+        [HttpPost]
+        [Route("api/items/")]
+        [ResponseType(typeof(string))]
+        public IHttpActionResult PostItem(Item item)
+        {
+
+            //does user exist
+            if (!_itemRespository.UserOk(item.UID))
+            {
+                dynamic jsonObejct = new JObject();
+                var HttpStatus = HttpStatusCode.Unauthorized;
+                jsonObejct.status = (int)HttpStatus;
+                jsonObejct.message =
+                    "The request has not been applied because it lacks valid authentication credentials for the target resource.";
+                return Content(HttpStatus, jsonObejct);
+            }
+
+            //post
+            if (item.UID != null)
+            {
+                _itemRespository.PostItem(item);
+            }
+
+
+            return Ok(item);
 
         }
 

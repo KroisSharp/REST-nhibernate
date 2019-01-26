@@ -12,5 +12,7 @@ namespace ShoppingListRest.Controllers.Respository
 
         Boolean UserOk(string uid);
 
+        Item PostItem(Item item);
+
     }
 }

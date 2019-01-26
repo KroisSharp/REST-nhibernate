@@ -26,6 +26,7 @@ namespace ShoppingListRest.Models.Respository.Hibernate
                 .List();
         }
 
+
         public bool UserOk(string uid)
         {
             var session = _hibernateConection.OpenSession();
@@ -37,5 +38,15 @@ namespace ShoppingListRest.Models.Respository.Hibernate
 
             return true;
         }
+
+        public Item PostItem(Item item)
+        {
+            var session = _hibernateConection.OpenSession();
+            var transaction = session.BeginTransaction();
+            session.SaveOrUpdate(item);
+            transaction.Commit();
+            return item;
+        }
+
     }
 }
