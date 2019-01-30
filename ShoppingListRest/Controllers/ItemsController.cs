@@ -62,7 +62,7 @@ namespace ShoppingListRest.Controllers
         }
         #endregion
 
-
+        #region Post
         [HttpPost]
         [Route("api/items/")]
         [ResponseType(typeof(string))]
@@ -90,6 +90,41 @@ namespace ShoppingListRest.Controllers
             return Ok(item);
 
         }
+        #endregion
 
+        #region Delete
+        [HttpDelete]
+        [Route("api/items/")]
+        [ResponseType(typeof(string))]
+        public IHttpActionResult DeleteItem(Item item)
+        {
+
+            //does user exist
+            if (!_itemRespository.UserOk(item.UID))
+            {
+                dynamic jsonObejct = new JObject();
+                var HttpStatus = HttpStatusCode.Unauthorized;
+                jsonObejct.status = (int)HttpStatus;
+                jsonObejct.message =
+                    "The request has not been applied because it lacks valid authentication credentials for the target resource.";
+                return Content(HttpStatus, jsonObejct);
+            }
+
+            //tilhøre ID -> firebase id
+            if (!_itemRespository.DoesIDMatchUID(item.UID,item.Id))
+            {
+                dynamic jsonObejct = new JObject();
+                var HttpStatus = HttpStatusCode.Unauthorized;
+                jsonObejct.status = (int)HttpStatus;
+                jsonObejct.message =
+                    "The request has not been applied because it lacks valid authentication credentials for the target resource.";
+                return Content(HttpStatus, jsonObejct);
+            }
+
+            _itemRespository.DeleteItem(item);
+            return StatusCode(HttpStatusCode.Accepted);
+
+        }
+        #endregion
     }
 }

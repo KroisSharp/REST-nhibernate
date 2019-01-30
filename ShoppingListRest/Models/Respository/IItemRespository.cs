@@ -9,10 +9,16 @@ namespace ShoppingListRest.Controllers.Respository
     public interface IItemRespository
     {
         IList<Item> GetItemsByUID(string uid);
-
-        Boolean UserOk(string uid);
-
         Item PostItem(Item item);
+        void DeleteItem(Item item);
+       
+
+
+        
+        Boolean UserOk(string uid);
+        Boolean DoesIDMatchUID(string uid, int id);
+
+        
 
     }
 }
