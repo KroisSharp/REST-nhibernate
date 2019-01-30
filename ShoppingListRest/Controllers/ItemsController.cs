@@ -81,7 +81,7 @@ namespace ShoppingListRest.Controllers
             }
 
             //post
-            if (item.UID != null)
+            if (item.UID != null && _itemRespository.UserOk(item.UID))
             {
                 _itemRespository.PostItem(item);
             }
