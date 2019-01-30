@@ -46,6 +46,18 @@ namespace ShoppingListRest.Models.Respository.Hibernate
             transaction.Commit();
         }
 
+        public Item PutItem(Item item)
+        {
+            var session = _hibernateConection.OpenSession();
+            var transaction = session.BeginTransaction();
+            //clear session da flere bliver brugt - NHibernate.NonUniqueObjectException
+            session.Clear();
+            session.SaveOrUpdate(item);
+            transaction.Commit();
+            return item;
+        }
+
+
         public bool UserOk(string uid)
         {
             var session = _hibernateConection.OpenSession();

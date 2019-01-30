@@ -11,7 +11,7 @@ namespace ShoppingListRest.Controllers.Respository
         IList<Item> GetItemsByUID(string uid);
         Item PostItem(Item item);
         void DeleteItem(Item item);
-       
+        Item PutItem(Item item);
 
 
         

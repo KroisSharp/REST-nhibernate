@@ -126,5 +126,53 @@ namespace ShoppingListRest.Controllers
 
         }
         #endregion
+
+        #region PUT
+        [HttpPut]
+        [Route("api/items/")]
+        [ResponseType(typeof(string))]
+        public IHttpActionResult PutItem(Item item)
+        {
+
+            //does user exist
+            if (!_itemRespository.UserOk(item.UID))
+            {
+                dynamic jsonObejct = new JObject();
+                var HttpStatus = HttpStatusCode.Unauthorized;
+                jsonObejct.status = (int)HttpStatus;
+                jsonObejct.message =
+                    "The request has not been applied because it lacks valid authentication credentials for the target resource.";
+                return Content(HttpStatus, jsonObejct);
+            }
+
+
+            //tilhøre ID -> firebase id
+            if (!_itemRespository.DoesIDMatchUID(item.UID, item.Id))
+            {
+                dynamic jsonObejct = new JObject();
+                var HttpStatus = HttpStatusCode.Unauthorized;
+                jsonObejct.status = (int)HttpStatus;
+                jsonObejct.message =
+                    "The request has not been applied because it lacks valid authentication credentials for the target resource.";
+                return Content(HttpStatus, jsonObejct);
+            }
+
+            //put
+            if (item == null)
+            {
+                dynamic jsonObejct = new JObject();
+                var HttpStatus = HttpStatusCode.BadRequest;
+                jsonObejct.status = (int)HttpStatus;
+                jsonObejct.message =
+                    "The server cannot or will not process the request due to something that is perceived to be a client error";
+                return Content(HttpStatus, jsonObejct);
+            }
+
+            _itemRespository.PutItem(item);
+            return Ok(item);
+
+        }
+        #endregion
+
     }
 }
